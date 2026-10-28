@@ -4,11 +4,22 @@ import numpy as np
 import pytest
 import torch
 
-from ruteo_inverso import (MuskingumCunge, ProblemaInverso, aporte_lateral_sintetico,
-                           caudal_referencia, diseno_codicioso, informacion_por_candidato,
-                           invertir_neuronal, jacobiano_diario, matriz_regularizacion,
-                           promedio_diario, red_sintetica, resolucion, rugosidad_verdadera,
-                           sintetizar_observaciones)
+from ruteo_inverso import (
+    MuskingumCunge,
+    ProblemaInverso,
+    aporte_lateral_sintetico,
+    caudal_referencia,
+    diseno_codicioso,
+    informacion_por_candidato,
+    invertir_neuronal,
+    jacobiano_diario,
+    matriz_regularizacion,
+    promedio_diario,
+    red_sintetica,
+    resolucion,
+    rugosidad_verdadera,
+    sintetizar_observaciones,
+)
 from ruteo_inverso.red import RedFluvial
 
 

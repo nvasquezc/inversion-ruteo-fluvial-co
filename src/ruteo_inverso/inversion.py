@@ -143,7 +143,7 @@ def invertir_tikhonov(
         opt = torch.optim.LBFGS([u], lr=1.0, max_iter=iter_por_etapa,
                                 line_search_fn="strong_wolfe")
 
-        def cierre():
+        def cierre(opt=opt, beta=beta):
             opt.zero_grad()
             ln = a_log_n(u)
             f = problema.phi_d(ln) + beta * _phi_m(ln, m_ref, D, alpha_s, alpha_x)

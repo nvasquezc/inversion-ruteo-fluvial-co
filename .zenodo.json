@@ -1,0 +1,43 @@
+{
+  "title": "inversion-ruteo-fluvial-co: inversión de ruteo fluvial, resolución y diseño de redes hidrométricas para Colombia",
+  "upload_type": "software",
+  "description": "<p>Operador Muskingum–Cunge diferenciable (PyTorch) que conserva la masa por construcción, inversión de Tikhonov de la rugosidad de Manning por tramo con β‑cooling y criterio de discrepancia, matriz de resolución y diseño D‑óptimo de redes hidrométricas.</p><p>Incluye el experimento sintético E01 (12 redes) y el análisis de viabilidad (Fase 0) sobre CAMELS‑COL v3 y GRanD v1.3: 18 cuencas independientes con ≥ 3 estaciones anidadas en Colombia.</p>",
+  "creators": [
+    {
+      "name": "Vásquez Castro, Néstor Oswaldo",
+      "affiliation": "Jitter Ingeniería SAS / Universidad Central",
+      "orcid": "0009-0003-6483-790X"
+    }
+  ],
+  "license": "MIT",
+  "access_right": "open",
+  "language": "spa",
+  "keywords": [
+    "hidrología diferenciable",
+    "Muskingum-Cunge",
+    "problemas inversos",
+    "matriz de resolución",
+    "diseño experimental óptimo",
+    "redes hidrométricas",
+    "CAMELS-COL",
+    "Colombia"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/nvasquezc/inversion-ruteo-fluvial-co",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "10.1029/2023WR035337",
+      "relation": "references",
+      "resource_type": "publication-article"
+    },
+    {
+      "identifier": "https://zenodo.org/records/18794895",
+      "relation": "references",
+      "resource_type": "dataset"
+    }
+  ],
+  "notes": "Desarrollado en el marco de la MSc en Analítica de Datos, Universidad Central (Bogotá, Colombia). Documentación y resultados bajo CC BY 4.0."
+}

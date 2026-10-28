@@ -28,8 +28,13 @@ from pathlib import Path
 
 import pandas as pd
 
-from ruteo_inverso.datos import (anidar_estaciones, anidar_por_poligonos, anos_solapados,
-                                 asignar_tramo, resumen_anidamiento)
+from ruteo_inverso.datos import (
+    anidar_estaciones,
+    anidar_por_poligonos,
+    anos_solapados,
+    asignar_tramo,
+    resumen_anidamiento,
+)
 
 BASE = Path("data/camels_col")
 
@@ -107,10 +112,10 @@ def main():
     anid["error_area_rel"] = (anid["area_km2"] - anid["area"]).abs() / anid["area"]
 
     resumen = resumen_anidamiento(anid)
-    resumen["sistemas_con_>=3_estaciones_y_>=%d_anos_comunes" % a.min_anos] = sistemas_utiles(
-        anid, a.min_anos)
+    clave_utiles = f"sistemas_con_>=3_estaciones_y_>={a.min_anos:.0f}_anos_comunes"
+    resumen[clave_utiles] = sistemas_utiles(anid, a.min_anos)
     resumen["mediana_error_area_poligono_vs_tabla"] = round(float(anid["error_area_rel"].median()), 4)
-    utiles = resumen["sistemas_con_>=3_estaciones_y_>=%d_anos_comunes" % a.min_anos]
+    utiles = resumen[clave_utiles]
     resumen["decision_fase0"] = ("VIABLE: >= 5 sistemas utiles" if utiles >= 5
                                  else "NO VIABLE con este criterio: redefinir alcance (ver protocolo)")
 

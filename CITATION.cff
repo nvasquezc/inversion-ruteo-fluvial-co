@@ -1,20 +1,35 @@
 cff-version: 1.2.0
 message: "Si usa este software, por favor cítelo así."
+type: software
 title: "inversion-ruteo-fluvial-co: inversión de ruteo fluvial, resolución y diseño de redes hidrométricas para Colombia"
 version: 0.1.0
-date-released: 2026-10-27
+date-released: 2026-10-28
 license: MIT
 repository-code: "https://github.com/nvasquezc/inversion-ruteo-fluvial-co"
+abstract: >-
+  Operador Muskingum–Cunge diferenciable que conserva la masa por construcción, inversión de
+  Tikhonov de la rugosidad de Manning por tramo, matriz de resolución y diseño D-óptimo de
+  redes hidrométricas. Verificado en redes sintéticas y con análisis de viabilidad sobre
+  CAMELS-COL (Colombia).
 authors:
   - family-names: "Vásquez Castro"
     given-names: "Néstor Oswaldo"
-    affiliation: "Universidad Central / Jitter Ingeniería SAS"
+    orcid: "https://orcid.org/0009-0003-6483-790X"
+    affiliation: "Jitter Ingeniería SAS / Universidad Central"
+    country: CO
+# Después de la primera publicación en Zenodo, agregue el DOI de concepto:
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: "DOI de concepto (todas las versiones)"
 keywords:
   - hidrología diferenciable
   - Muskingum-Cunge
-  - inversión
+  - problemas inversos
   - matriz de resolución
   - diseño experimental óptimo
+  - redes hidrométricas
+  - CAMELS-COL
   - Colombia
 references:
   - type: article
@@ -25,6 +40,15 @@ references:
     journal: "Water Resources Research"
     year: 2024
     doi: "10.1029/2023WR035337"
-  - type: dataset
+  - type: data
+    authors:
+      - family-names: Jiménez
     title: "CAMELS-COL: A Large-Sample Hydrometeorological Dataset for Colombia"
     url: "https://zenodo.org/records/18794895"
+  - type: data
+    authors:
+      - family-names: Lehner
+        given-names: Bernhard
+    title: "Global Reservoir and Dam Database (GRanD) v1.3"
+    year: 2019
+    url: "https://www.globaldamwatch.org/"

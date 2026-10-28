@@ -1,4 +1,5 @@
 import pandas as pd
+import pytest
 
 from ruteo_inverso.datos import anidar_estaciones, resumen_anidamiento
 
@@ -22,9 +23,8 @@ def test_anidamiento_red_de_juguete():
                  "sistemas_con_>=3_estaciones": 1}
 
 
-
 def test_anidamiento_por_poligonos():
-    import geopandas as gpd
+    gpd = pytest.importorskip("geopandas")
     from shapely.geometry import box
 
     from ruteo_inverso.datos import anidar_por_poligonos

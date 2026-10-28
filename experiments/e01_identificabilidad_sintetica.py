@@ -27,11 +27,22 @@ import numpy as np
 import torch
 from scipy import stats
 
-from ruteo_inverso import (MuskingumCunge, ProblemaInverso, aporte_lateral_sintetico,
-                           caudal_referencia, diseno_codicioso, informacion_por_candidato,
-                           invertir_tikhonov, jacobiano_diario, matriz_regularizacion,
-                           promedio_diario, red_sintetica, resolucion, rugosidad_verdadera,
-                           sintetizar_observaciones)
+from ruteo_inverso import (
+    MuskingumCunge,
+    ProblemaInverso,
+    aporte_lateral_sintetico,
+    caudal_referencia,
+    diseno_codicioso,
+    informacion_por_candidato,
+    invertir_tikhonov,
+    jacobiano_diario,
+    matriz_regularizacion,
+    promedio_diario,
+    red_sintetica,
+    resolucion,
+    rugosidad_verdadera,
+    sintetizar_observaciones,
+)
 
 PASOS_DIA = 24
 DIAS = 40
