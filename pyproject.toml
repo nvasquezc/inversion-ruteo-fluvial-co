@@ -1,0 +1,35 @@
+[project]
+name = "ruteo-inverso"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Néstor O. Vásquez C.", email = "nvasquezc@ucentral.edu.co" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
+    "pandas>=3.1.0",
+    "scipy>=1.18.1",
+    "torch>=2.14.1",
+]
+
+[project.optional-dependencies]
+notebook = [
+    "ipykernel>=7.4.0",
+    "jupyterlab>=4.6.4",
+]
+geo = [
+    "geopandas>=1.2.0",
+    "pyogrio>=0.13.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
