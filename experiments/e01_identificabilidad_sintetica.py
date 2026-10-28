@@ -131,58 +131,11 @@ def una_red(semilla: int, k: int, n_aleatorios: int) -> dict:
     }
 
 
-def figuras(resultados: list[dict], salida: Path) -> None:
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+def figuras(e01: dict, salida: Path) -> None:
+    """Figura de E01 con el estilo de publicación (Plotly): HTML interactivo + PNG."""
+    from ruteo_inverso.graficos import figura_e01, guardar
 
-    sup, txt, txt2 = "#fcfcfb", "#0b0b0b", "#52514e"
-    s1, s2, s3 = "#2a78d6", "#eb6834", "#1baf7a"
-    plt.rcParams.update({"figure.facecolor": sup, "axes.facecolor": sup,
-                         "axes.edgecolor": txt2, "axes.labelcolor": txt,
-                         "xtick.color": txt2, "ytick.color": txt2, "text.color": txt,
-                         "font.size": 10, "axes.spines.top": False,
-                         "axes.spines.right": False})
-
-    # Fig 1: diag(R) vs error
-    fig, ax = plt.subplots(figsize=(5.5, 4))
-    x = np.concatenate([r["diag_R"] for r in resultados])
-    y = np.concatenate([r["error_abs"] for r in resultados])
-    ax.scatter(x, y, s=22, color=s1, alpha=0.7, edgecolor=sup, linewidth=1)
-    ax.set_xlabel("diag(R) — resolución linealizada (modelo de referencia)")
-    ax.set_ylabel("|log n̂ − log n_verdadero|")
-    rho, p = stats.spearmanr(x, y)
-    ax.set_title(f"Resolución vs error de recuperación\nSpearman ρ = {rho:.2f} (p = {p:.1e}), "
-                 f"{len(resultados)} redes × 60 tramos", fontsize=10, loc="left")
-    ax.grid(alpha=0.25, linewidth=0.6)
-    fig.tight_layout()
-    fig.savefig(salida / "e01_resolucion_vs_error.png", dpi=160)
-    plt.close(fig)
-
-    # Fig 2: RMSE por estrategia (puntos por red, con media)
-    fig, ax = plt.subplots(figsize=(5.5, 4))
-    estrategias = ["D-optimo", "mayor-area", "aleatorio"]
-    colores = [s1, s2, s3]
-    for k, (e, c) in enumerate(zip(estrategias, colores)):
-        vals = []
-        for r in resultados:
-            v = [f["rmse_log_n"] for f in r["diseno"] if f["estrategia"] == e]
-            vals.append(np.mean(v))
-        xs = np.full(len(vals), k) + np.linspace(-0.12, 0.12, len(vals))
-        ax.scatter(xs, vals, s=40, color=c, edgecolor=sup, linewidth=1.5, zorder=3)
-        ax.hlines(np.mean(vals), k - 0.25, k + 0.25, color=txt, linewidth=2, zorder=4)
-    base = [r["rmse_base"] for r in resultados]
-    ax.axhline(np.mean(base), color=txt2, linestyle="--", linewidth=1)
-    ax.text(2.45, np.mean(base), " solo red base", va="center", color=txt2, fontsize=9)
-    ax.set_xticks(range(3), ["D‑óptimo", "Mayor área", "Aleatorio (media)"])
-    ax.set_ylabel("RMSE de log n (menor es mejor)")
-    ax.set_title("Recuperación de rugosidad al agregar estaciones\n"
-                 "punto = una red sintética; barra = media", fontsize=10, loc="left")
-    ax.grid(axis="y", alpha=0.25, linewidth=0.6)
-    ax.set_xlim(-0.5, 3.2)
-    fig.tight_layout()
-    fig.savefig(salida / "e01_rmse_por_estrategia.png", dpi=160)
-    plt.close(fig)
+    guardar(figura_e01(e01), "e01_identificabilidad", salida)
 
 
 def main():
@@ -243,7 +196,7 @@ def main():
     (args.salida / "e01_resultados.json").write_text(
         json.dumps({"global": global_, "por_red": resultados}, indent=1, ensure_ascii=False),
         encoding="utf-8")
-    figuras(resultados, args.salida)
+    figuras({"global": global_, "por_red": resultados}, args.salida)
 
 
 if __name__ == "__main__":

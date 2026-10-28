@@ -15,7 +15,59 @@ regularización, matriz de resolución, diseño de adquisición) al **ruteo de c
 fluviales, con un operador Muskingum–Cunge diferenciable que **conserva la masa por
 construcción**.
 
+<p align="center"><img src="results/fase0/fase0_cuencas_anidadas.png" width="100%"></p>
+
+**Figura 1.** Dónde se puede aplicar con datos reales. (a) Cuencas de Colombia con al menos tres
+estaciones de CAMELS‑COL anidadas y diez años de registro común: naturales (azul), reguladas por
+presas de GRanD v1.3 (bermellón) y subsistemas contenidos en otra cuenca (gris), con la red de
+drenaje de CAMELS‑COL, las estaciones anidadas (puntos) y las presas (cuadrados). En negro, la
+cuenca piloto 31097010 (río Meta, 138 309 km², 11 estaciones). (b) Estaciones anidadas frente al
+área de la cuenca de salida de cada subsistema. Límites: Natural Earth 10 m.
+[Versión interactiva](results/fase0/fase0_cuencas_anidadas.html).
+
 ---
+
+## Resultados principales
+
+<p align="center"><img src="results/e01_sintesis.png" width="100%"></p>
+
+**Figura 2.** Qué se puede aprender del caudal medio diario (experimento E01: 12 redes sintéticas
+de 60 tramos, tres estaciones, error del 5 % + 0,5 m³ s⁻¹). (a) Resolución linealizada diag(R) de
+cada tramo frente a su área de drenaje, con la mediana y el rango intercuartil por octil de área;
+diag(R) = 1 significa que el valor de *n* lo determinan los datos y 0 que lo determina la
+regularización. (b) Diferencia de error en log *n* entre ubicar cuatro estaciones nuevas con
+diseño D‑óptimo y en los cuatro tramos de mayor área, red por red, con la media y su IC del 95 %
+(bootstrap). [Versión interactiva](results/e01_sintesis.html).
+
+| Resultado (sintético, 12 redes) | Valor |
+|---|---|
+| Parámetros efectivamente resueltos con 3 estaciones, tr(R) | **2,9 de 60** en promedio |
+| Tramos con diag(R) > 0,1 | **13 %** en total; 83 % en el octil de mayor área (> 3 200 km²), 3 % en el resto |
+| Relación área–resolución | ρ de Spearman = 0,81 entre log área y log diag(R) (720 tramos) |
+| RMSE de log *n*: sin datos → red base → + 4 D‑óptimo | 0,307 → 0,255 → **0,226** |
+| D‑óptimo frente a mayor área | mejor en **11 de 12** redes; Wilcoxon pareado p = 7×10⁻⁴; ΔRMSE = −0,021 [−0,031; −0,012] |
+| Cuencas reales con ≥ 3 estaciones anidadas (Fase 0) | **18** independientes, **15** sin presas |
+
+- **Hallazgo central: identificabilidad baja y dependiente de la escala.** Con caudal medio
+  diario, la rugosidad solo se resuelve en los tramos grandes cercanos a las estaciones; en las
+  cabeceras la decide la regularización. Un mapa de *n* aprendido sin análisis de resolución puede
+  parecer detallado y estar mostrando el supuesto, no los datos. Concuerda con Bindas et al.
+  (2024), que solo hallaron beneficio en subcuencas mayores a 2 000 km².
+- **H2 (diseño) — apoyada.** El diseño D‑óptimo, calculado **sin conocer la verdad**, reduce el
+  error ≈ 8 % más que la heurística de aforar los ríos más grandes, que repite información sobre
+  el mismo cauce. El efecto es modesto y se obtuvo con aporte lateral perfecto.
+- **H1 (diag(R) predice el error) — apoyo débil.** ρ negativa en 12 de 12 redes, pero pequeña
+  (mediana −0,15).
+- **Fase 0 — viable.** Los datos reales permiten seguir; la piloto 31097010 se eligió por escala,
+  precisamente porque la resolución se concentra en los tramos grandes.
+
+> **Alcance.** Los resultados de identificabilidad y diseño son sintéticos y linealizados; el
+> modelo aún no ha invertido datos de IDEAM. La revisión de literatura es preliminar
+> ([`docs/estado_del_arte.md`](docs/estado_del_arte.md)): ninguna afirmación de novedad es
+> definitiva.
+
+El análisis completo, con 14 figuras numeradas y su interpretación, está en el cuaderno
+**[`notebooks/01_analisis_paso_a_paso.ipynb`](notebooks/01_analisis_paso_a_paso.ipynb)**.
 
 ## Motivación
 
@@ -41,13 +93,10 @@ Cinco hipótesis falsables (H1–H5), con su prueba y su criterio de rechazo, en
 
 | Fase | Contenido | Estado |
 |---|---|---|
-| 0 | Viabilidad con datos reales (CAMELS‑COL + GRanD) | ✅ Datos: **VIABLE**. Literatura: pendiente |
-| 1 | Verificación sintética (E01: H1, H2) | ✅ E01 completo · E02, E03 planeados |
+| 0 | Viabilidad con datos reales (CAMELS‑COL + GRanD) | ✅ Datos: **viable**. Literatura: pendiente |
+| 1 | Verificación sintética (E01: H1, H2) | ✅ E01 completo · E02 (no lineal) y E03 (MCMC) planeados |
 | 2 | Inversión con datos reales, piloto 31097010 | ⏳ No iniciada |
 | 3 | Mapa de resolubilidad y ranking de sitios; artículo | ⏳ |
-
-> La revisión de literatura es preliminar ([`docs/estado_del_arte.md`](docs/estado_del_arte.md)):
-> ninguna afirmación de novedad es definitiva.
 
 ## Enfoque
 
@@ -58,61 +107,12 @@ Cinco hipótesis falsables (H1–H5), con su prueba y su criterio de rechazo, en
     Resolución:  R = (JᵀW_d²J + βW_mᵀW_m)⁻¹ JᵀW_d²J        diag(R) ∈ [0, 1] por tramo
     Diseño:      siguiente estación = argmax_c  log det(H + F_c)         (criterio D)
 
-La correspondencia con cada sesión del curso
-[`inversion-geofisica-python`](https://github.com/nvasquezc/inversion-geofisica-python) está en
-[`docs/puente_inversion_geofisica.md`](docs/puente_inversion_geofisica.md).
-
-## Resultados
-
-### E01 — sintético, 12 redes × 60 tramos
-
-40 días, paso horario, observaciones como **media diaria** (igual que IDEAM y CAMELS‑COL), error
-del 5 % + 0,5 m³/s. Red base de 3 estaciones a la que se agregan 4 con distintas estrategias.
-
-| Configuración | RMSE de log *n* (media de 12 redes) |
-|---|---|
-| Solo el valor de referencia (sin datos) | 0,307 |
-| Red base (3 estaciones) | 0,255 |
-| + 4 estaciones aleatorias (5 sorteos por red) | 0,247 |
-| + 4 estaciones en los ríos de mayor área | 0,248 |
-| **+ 4 estaciones con diseño D‑óptimo** | **0,226** |
-
-- **H2 (diseño) — apoyada.** El diseño D‑óptimo, calculado **sin conocer la verdad**, gana en
-  **11 de 12 redes**. Wilcoxon pareado unilateral p = 7×10⁻⁴; diferencia media frente a mayor
-  área −0,021 (IC bootstrap 95 % [−0,031; −0,012]), ~8 % menos error.
-- **H1 (la resolución predice el error) — apoyo débil.** ρ de Spearman negativa en 12 de 12
-  redes, pero pequeña (mediana −0,15).
-- **Hallazgo principal: identificabilidad baja.** Con caudal medio diario solo el **13 %** de los
-  tramos tiene diag(R) > 0,1 y menos del **1 %** supera 0,5: la mayor parte del campo de
-  rugosidad lo fija la regularización. Los mapas de *n* aprendidos sin análisis de resolución
-  deben leerse con cautela.
-
-<p align="center">
-<img src="results/e01_rmse_por_estrategia.png" width="46%">
-<img src="results/e01_resolucion_vs_error.png" width="46%">
-</p>
-
-### Fase 0 — CAMELS‑COL v3 + GRanD v1.3
-
-| Resultado | Valor |
-|---|---|
-| Estaciones con otra estación aguas abajo | 300 de 346 |
-| Cuencas independientes con ≥ 3 estaciones anidadas | 18 (21 subsistemas con ≥ 10 años de registro común) |
-| Error de área polígono vs. tabla (mediana) | 0,76 % |
-| Estaciones con al menos una presa en su cuenca | 36 de 346 |
-| Cuencas sin presas (grupo A) | 15, con 89 estaciones |
-| Cuenca piloto para la Fase 2 | 31097010 (natural, 11 estaciones, 138 309 km²) |
-
-Tablas en [`results/fase0/`](results/fase0/). Tratamiento de las cuencas reguladas
-(Magdalena‑Cauca, 35257040, Sinú) en [`docs/protocolo.md`](docs/protocolo.md).
-
-### Garantía física verificada
-
-`tests/test_nucleo.py` comprueba la continuidad discreta por tramo y en toda la red,
-Δt·½Σ[(I_t + I_{t+1}) − (O_t + O_{t+1})] = S_T − S_0, con error relativo < 10⁻¹⁰. La conservación
-es una propiedad de la arquitectura, no un término de penalización. También se verifican el
-gradiente frente a diferencias finitas, la causalidad del Jacobiano, diag(R) ∈ [0, 1] y la
-monotonía del criterio D.
+La conservación de masa es una propiedad de la arquitectura (c₀ + c₁ + c₂ = 1), no un término de
+penalización: `tests/test_nucleo.py` verifica la continuidad discreta por tramo y en toda la red
+con error relativo < 10⁻¹⁰, además del gradiente frente a diferencias finitas, la causalidad del
+Jacobiano, diag(R) ∈ [0, 1] y la monotonía del criterio D. La correspondencia con cada sesión del
+curso [`inversion-geofisica-python`](https://github.com/nvasquezc/inversion-geofisica-python) está
+en [`docs/puente_inversion_geofisica.md`](docs/puente_inversion_geofisica.md).
 
 ## Reproducir
 
@@ -124,7 +124,12 @@ Requiere [uv](https://docs.astral.sh/uv/). Todo corre en CPU.
     uv run python experiments/e00_inversion_una_red.py      # una inversión, ~15 s
     uv run python experiments/e01_identificabilidad_sintetica.py --redes 12 --aleatorios 5   # ~5 min
 
-Notebook paso a paso:
+Figuras (Plotly, HTML interactivo + PNG a ~300 ppp; el PNG necesita Chrome: `uv run plotly_get_chrome`):
+
+    uv run python scripts/preparar_mapa_fase0.py    # capa del mapa (necesita los datos crudos; ya versionada)
+    uv run python scripts/figuras_resultados.py     # figuras 1 y 2 de este README
+
+Cuaderno:
 
     uv run python scripts/construir_notebook.py
     uv run jupyter nbconvert --to notebook --execute --inplace notebooks/01_analisis_paso_a_paso.ipynb
@@ -136,17 +141,6 @@ Fase 0 (necesita los datos descritos en [`data/README.md`](data/README.md)):
     uv run python scripts/resumen_sistemas_fase0.py          # sistemas de estaciones anidadas
     uv run python scripts/marcar_embalses.py --presas data/GRanD_Version_1_3/GRanD_dams_v1_3.shp
 
-## Arquitectura
-
-    datos (CAMELS‑COL, GRanD) ─► datos.py: anidamiento, tramos, embalses
-                                        │
-    red.py: DAG + orden topológico ─► ruteo.py: Muskingum–Cunge G(m) ─► promedio diario
-                                        │ autodiff (PyTorch)
-                     ┌──────────────────┼──────────────────────┐
-              inversion.py        resolucion.py            resolucion.py
-           Tikhonov + β‑cooling   J, R, covarianza      diseño D/A‑óptimo
-           inversión neuronal
-
 ## Estructura
 
     src/ruteo_inverso/
@@ -156,20 +150,21 @@ Fase 0 (necesita los datos descritos en [`data/README.md`](data/README.md)):
       inversion.py    Tikhonov con β‑cooling y discrepancia; inversión neuronal no supervisada
       resolucion.py   Jacobiano (autodiff), matriz de resolución, covarianza, diseño D/A‑óptimo
       datos.py        anidamiento por polígonos y por HydroRIVERS; asignación de estaciones a tramos
-      graficos.py     dibujo de la red y estilo de figuras
+      graficos.py     figuras de publicación (Plotly): red en planta, mapas, E01, Fase 0
+      recursos/       límites de países (Natural Earth 10 m, dominio público)
     tests/            16 pruebas
     experiments/      E00 (una red) y E01 (12 redes); E02 y E03 planeados
     notebooks/        01_analisis_paso_a_paso.ipynb (empieza aquí)
-    scripts/          construcción del notebook, descarga de datos y análisis de la Fase 0
+    scripts/          cuaderno, figuras, capa del mapa, descarga de datos y Fase 0
     docs/             documentación (índice abajo)
-    results/          figuras y JSON de E01; results/fase0/ con anidamiento y embalses
+    results/          E01 (JSON, figuras); fase0/ (tablas de anidamiento y embalses, capa del mapa)
     data/             datos de terceros (no versionados; ver data/README.md)
 
 ## Documentación
 
 | # | Documento | Contenido |
 |---|---|---|
-| 00 | [`notebooks/01_analisis_paso_a_paso.ipynb`](notebooks/01_analisis_paso_a_paso.ipynb) | **Empieza aquí.** 12 pasos ejecutados, de la red como grafo al diseño D‑óptimo |
+| 00 | [`notebooks/01_analisis_paso_a_paso.ipynb`](notebooks/01_analisis_paso_a_paso.ipynb) | **Empieza aquí.** 12 secciones y 14 figuras, de la red como grafo a la viabilidad con datos reales |
 | 01 | [`docs/protocolo.md`](docs/protocolo.md) | Pregunta, hipótesis H1–H5, fases, decisión de la Fase 0, métricas y amenazas a la validez |
 | 02 | [`docs/estado_del_arte.md`](docs/estado_del_arte.md) | Revisión preliminar y protocolo de la revisión sistemática |
 | 03 | [`docs/puente_inversion_geofisica.md`](docs/puente_inversion_geofisica.md) | Correspondencia con el curso de inversión geofísica |
@@ -192,6 +187,7 @@ de ruteo usado en pronóstico y alerta. Sirve para priorizar inversión en monit
   de Chapinero, con datos sintéticos y una restricción que no actuaba a escala urbana. De ahí la
   pregunta que este repositorio aborda con un problema físico real: **¿cuándo la física impuesta
   por construcción aporta información que los datos solos no dan?**
+- Paleta categórica de Okabe e Ito (2008); límites de países de Natural Earth.
 
 ## Cómo citar
 
@@ -205,7 +201,7 @@ Si usa los resultados de la Fase 0, cite también CAMELS‑COL (Zenodo 18794895)
 
 ## Licencias
 
-Código bajo [MIT](LICENSE). Documentación, notebook y resultados bajo
+Código bajo [MIT](LICENSE). Documentación, cuaderno y resultados bajo
 [CC BY 4.0](LICENSE-docs.md). Los datos de terceros conservan sus licencias de origen.
 
 ## Autor

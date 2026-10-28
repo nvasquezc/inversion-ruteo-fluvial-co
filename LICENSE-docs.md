@@ -7,7 +7,10 @@
 | Resultados y figuras (`results/`) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es) |
 | Datos de terceros (`data/`, no incluidos) | Licencia de origen: CAMELS‑COL (Zenodo 18794895), GRanD v1.3, HydroRIVERS. Ver [`data/README.md`](data/README.md) |
 
-Las tablas de `results/fase0/` son productos derivados de CAMELS‑COL y GRanD; al reutilizarlas
+Los límites de países (`src/ruteo_inverso/recursos/paises_ne10m.geojson`) vienen de
+[Natural Earth](https://www.naturalearthdata.com/) 1:10 m, de dominio público.
+
+Las tablas y la capa del mapa de `results/fase0/` son productos derivados de CAMELS‑COL y GRanD; al reutilizarlas
 cite también esas fuentes.
 
 Atribución sugerida para la documentación y los resultados:

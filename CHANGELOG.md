@@ -26,7 +26,15 @@ Primera versión pública.
   diag(R) > 0,1.
 - **Fase 0 (CAMELS‑COL v3 + GRanD v1.3):** anidamiento por polígonos de cuenca; 18 cuencas
   independientes con ≥ 3 estaciones, 15 sin presas. Decisión: VIABLE. Piloto 31097010.
-- Notebook `01_analisis_paso_a_paso.ipynb` con 12 pasos ejecutados.
+- Notebook `01_analisis_paso_a_paso.ipynb` con 12 secciones ejecutadas, resumen, tablas de
+  tres filetes y 14 figuras numeradas con su pie, como en un artículo.
+- Módulo `graficos.py`: figuras de publicación con Plotly (`graph_objects`): ejes en caja,
+  paneles (a), (b), paleta de Okabe e Ito, escalas secuenciales de un tono, red sintética en
+  planta con barra de escala y mapa de Colombia (Natural Earth 10 m) con las cuencas anidadas
+  de CAMELS‑COL, su red de drenaje y las presas de GRanD.
+- `scripts/preparar_mapa_fase0.py` y `scripts/figuras_resultados.py` para regenerar las figuras.
+- README con mapa de Colombia (Fase 0) y figura de síntesis de E01: la resolución crece con el
+  área de drenaje (ρ = 0,81) y el diseño D‑óptimo gana en 11 de 12 redes.
 - CI con uv, ruff y pytest; metadatos de cita (`CITATION.cff`, `.zenodo.json`).
 
 [Sin publicar]: https://github.com/nvasquezc/inversion-ruteo-fluvial-co/compare/v0.1.0...HEAD
