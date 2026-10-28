@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "Si usa este software, por favor cítelo así."
+title: "inversion-ruteo-fluvial-co: inversión de ruteo fluvial, resolución y diseño de redes hidrométricas para Colombia"
+version: 0.1.0
+date-released: 2026-10-27
+license: MIT
+repository-code: "https://github.com/nvasquezc/inversion-ruteo-fluvial-co"
+authors:
+  - family-names: "Vásquez Castro"
+    given-names: "Néstor Oswaldo"
+    affiliation: "Universidad Central / Jitter Ingeniería SAS"
+keywords:
+  - hidrología diferenciable
+  - Muskingum-Cunge
+  - inversión
+  - matriz de resolución
+  - diseño experimental óptimo
+  - Colombia
+references:
+  - type: article
+    authors:
+      - family-names: Bindas
+        given-names: Tadd
+    title: "Improving River Routing Using a Differentiable Muskingum-Cunge Model and Physics-Informed Machine Learning"
+    journal: "Water Resources Research"
+    year: 2024
+    doi: "10.1029/2023WR035337"
+  - type: dataset
+    title: "CAMELS-COL: A Large-Sample Hydrometeorological Dataset for Colombia"
+    url: "https://zenodo.org/records/18794895"

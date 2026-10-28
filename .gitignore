@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Datos crudos: pesados y con licencias propias
+data/*
+!data/README.md
+
+# Salidas intermedias
+results/fase0/
+.pytest_cache/
+.ipynb_checkpoints/
