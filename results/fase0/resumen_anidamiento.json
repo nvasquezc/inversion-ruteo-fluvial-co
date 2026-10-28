@@ -1,0 +1,10 @@
+{
+  "estaciones": 346,
+  "con_estacion_aguas_abajo": 300,
+  "con_estaciones_aguas_arriba": 159,
+  "aisladas": 22,
+  "sistemas_con_>=3_estaciones": 18,
+  "sistemas_con_>=3_estaciones_y_>=10_anos_comunes": 21,
+  "mediana_error_area_poligono_vs_tabla": 0.0076,
+  "decision_fase0": "VIABLE: >= 5 sistemas utiles"
+}

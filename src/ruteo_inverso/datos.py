@@ -1,17 +1,16 @@
-"""Construcción de la red real: estaciones CAMELS‑COL sobre la topología HydroRIVERS.
+"""Anidamiento de estaciones de CAMELS‑COL: por polígonos de cuenca y sobre HydroRIVERS.
 
 Responde la pregunta crítica de la Fase 0: ¿cuántas estaciones de CAMELS‑COL
 están ANIDADAS (una aguas arriba de otra)? Sin anidamiento, el problema de
 ruteo en red no tiene datos internos con qué invertirse.
 
-Fuentes (descargar manualmente o con scripts/):
-* CAMELS‑COL (Jiménez et al.; Zenodo 10.5281/zenodo.18794895, CC BY 4.0):
-  coordenadas WGS‑84 y área de cada estación.
+Fuentes:
+* CAMELS‑COL v3 (Jiménez et al.; Zenodo 10.5281/zenodo.18794895, CC BY 4.0).
+  Formato verificado: coordenadas de estación en metros World Mercator
+  (EPSG:3395), polígonos de cuenca con campo IDEAM_CODE (EPSG:3395) y área en
+  km² en la tabla de características fisiográficas.
 * HydroRIVERS v1.0 (Lehner & Grill, 2013), región "sa" (Sudamérica):
-  campos HYRIV_ID, NEXT_DOWN, UPLAND_SKM, LENGTH_KM.
-
-Los nombres de columnas de CAMELS‑COL se pasan como argumentos porque no se
-han verificado aún contra el archivo publicado.
+  campos HYRIV_ID, NEXT_DOWN, UPLAND_SKM. Opcional, como verificación.
 """
 
 from __future__ import annotations
@@ -86,20 +85,23 @@ def _tamanos_sistemas(anidadas: pd.DataFrame, col_est: str) -> pd.Series:
 
 
 def asignar_tramo(rios_gdf, estaciones_df, col_lon: str, col_lat: str, col_area: str,
-                  radio_km: float = 5.0, tol_area: float = 0.3):
+                  radio_km: float = 5.0, tol_area: float = 0.3, crs_estaciones: str = "EPSG:4326"):
     """Asigna cada estación al tramo HydroRIVERS con área de drenaje más compatible
     dentro de ``radio_km``.
 
     Requiere geopandas. Selecciona el tramo cuya UPLAND_SKM minimiza
     |log(A_tramo / A_estación)| y marca como dudosas las asignaciones con error
     relativo de área > ``tol_area``.
+
+    ``crs_estaciones``: sistema de las coordenadas de entrada. CAMELS‑COL entrega
+    ``gauge_lon``/``gauge_lat`` en metros World Mercator (EPSG:3395), no en grados.
     """
     import geopandas as gpd
 
     est = gpd.GeoDataFrame(
         estaciones_df.copy(),
         geometry=gpd.points_from_xy(estaciones_df[col_lon], estaciones_df[col_lat]),
-        crs="EPSG:4326",
+        crs=crs_estaciones,
     ).to_crs("EPSG:9377")  # MAGNA‑SIRGAS / Origen Nacional (metros)
     rios = rios_gdf.to_crs("EPSG:9377")
     # Candidatos: todos los tramos a menos de radio_km; se elige por área, no por distancia
@@ -111,3 +113,59 @@ def asignar_tramo(rios_gdf, estaciones_df, col_lon: str, col_lat: str, col_area:
     mejor = multi.sort_values("err_log_area").groupby(level=0).head(1).sort_index()
     mejor["asignacion_dudosa"] = np.exp(mejor["err_log_area"]) - 1 > tol_area
     return pd.DataFrame(mejor.drop(columns="geometry"))
+
+
+# ----------------------------------------------------------------------
+def anidar_por_poligonos(cuencas_gdf, col_id: str, umbral: float = 0.9,
+                         crs_area: str = "EPSG:9377") -> pd.DataFrame:
+    """Anidamiento a partir de los polígonos de cuenca de cada estación.
+
+    La cuenca A está anidada en B si al menos ``umbral`` de su área cae dentro de
+    B y B es más grande. La estación inmediatamente aguas abajo de A es la MENOR
+    de las cuencas que la contienen. No necesita una red de ríos externa: usa la
+    delimitación publicada por CAMELS‑COL, así que sirve como verificación
+    independiente de la asignación sobre HydroRIVERS.
+
+    Devuelve una tabla con columnas ``estacion``, ``area_km2``,
+    ``estacion_aguas_abajo``, ``fraccion_contenida`` y
+    ``n_estaciones_aguas_arriba_directas`` (mismo formato que
+    ``anidar_estaciones``, para usar ``resumen_anidamiento``).
+    """
+    import geopandas as gpd
+
+    g = cuencas_gdf[[col_id, "geometry"]].copy().to_crs(crs_area)
+    g["geometry"] = g.geometry.make_valid()
+    g = g.rename(columns={col_id: "estacion"}).reset_index(drop=True)
+    g["area_km2"] = g.geometry.area / 1e6
+
+    pares = gpd.sjoin(g, g, how="inner", predicate="intersects",
+                      lsuffix="a", rsuffix="b")
+    pares = pares[pares["estacion_a"] != pares["estacion_b"]]
+    pares = pares[pares["area_km2_b"] > pares["area_km2_a"]]
+
+    geom = g.geometry
+    fracciones = []
+    for ia, ib in zip(pares.index, pares["index_b"]):
+        inter = geom.iloc[ia].intersection(geom.iloc[ib]).area / 1e6
+        fracciones.append(inter / g.at[ia, "area_km2"])
+    pares = pares.assign(fraccion=fracciones)
+    contenedoras = pares[pares["fraccion"] >= umbral]
+
+    # inmediata aguas abajo = la contenedora de menor área
+    inmediata = (contenedoras.sort_values("area_km2_b")
+                 .groupby("estacion_a").head(1)
+                 .set_index("estacion_a"))
+
+    out = g.drop(columns="geometry").copy()
+    out["estacion_aguas_abajo"] = out["estacion"].map(inmediata["estacion_b"])
+    out["fraccion_contenida"] = out["estacion"].map(inmediata["fraccion"])
+    conteo = out["estacion_aguas_abajo"].value_counts()
+    out["n_estaciones_aguas_arriba_directas"] = out["estacion"].map(conteo).fillna(0).astype(int)
+    return pd.DataFrame(out)
+
+
+def anos_solapados(inicio_a, fin_a, inicio_b, fin_b) -> float:
+    """Años de registro en común entre dos estaciones (0 si no se solapan)."""
+    ini = max(pd.Timestamp(inicio_a), pd.Timestamp(inicio_b))
+    fin = min(pd.Timestamp(fin_a), pd.Timestamp(fin_b))
+    return max((fin - ini).days, 0) / 365.25

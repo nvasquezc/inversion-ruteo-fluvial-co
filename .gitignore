@@ -14,6 +14,5 @@ data/*
 !data/README.md
 
 # Salidas intermedias
-results/fase0/
 .pytest_cache/
 .ipynb_checkpoints/
