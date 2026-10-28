@@ -24,3 +24,21 @@ rmse = lambda m: float(((m - log_n_verdadero) ** 2).mean().sqrt())
 print("estaciones:", estaciones, " N datos:", problema.n_datos)
 print("etapas (beta, phi_d):", [(round(h["beta"], 2), round(h["phi_d"], 1)) for h in res.historial])
 print(f"RMSE referencia {rmse(m_ref):.3f} -> invertido {rmse(res.log_n):.3f}")
+
+
+# --- Fase 7: resolución y diseño ---------------------------------------
+from ruteo_inverso.resolucion import (diseno_codicioso, informacion_por_candidato,
+                                      jacobiano_diario, matriz_regularizacion, resolucion)
+from ruteo_inverso.ruteo import promedio_diario
+
+Wm2 = matriz_regularizacion(red.n, red.laplaciano(), 1.0, 1.0)
+J = jacobiano_diario(modelo, res.log_n, q, 24, dias_calentamiento=3)
+with torch.no_grad():
+    Qd = promedio_diario(modelo.rutear(res.log_n, q), 24)[3:]
+sig = 0.05 * Qd.abs() + 0.5
+R = resolucion(J[:, estaciones], sig[:, estaciones], Wm2, res.beta)
+print(f"suma diag(R) = {float(R.diag_R.sum()):.1f} de {red.n};  tramos con diag(R) > 0.1: {int((R.diag_R > 0.1).sum())}")
+
+F = informacion_por_candidato(J, sig)
+nuevas, _ = diseno_codicioso(F, R.H, 4, excluir=estaciones, criterio="D")
+print("4 estaciones D-óptimas:", nuevas)
