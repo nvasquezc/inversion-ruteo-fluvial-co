@@ -212,5 +212,3 @@ Código bajo [MIT](LICENSE). Documentación, notebook y resultados bajo
 
 **Néstor Oswaldo Vásquez Castro** — Jitter Ingeniería SAS / Universidad Central (Bogotá, Colombia)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0003--6483--790X-a6ce39.svg)](https://orcid.org/0009-0003-6483-790X)
-
-Desarrollado en el marco de la MSc en Analítica de Datos, Universidad Central.
