@@ -38,4 +38,4 @@ __all__ = [
     "sintetizar_observaciones",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"

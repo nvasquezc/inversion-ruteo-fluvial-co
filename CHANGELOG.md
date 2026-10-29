@@ -10,6 +10,13 @@ versiones según [SemVer](https://semver.org/lang/es/).
 - Lector de las series diarias de CAMELS‑COL para el piloto 31097010 (Fase 2).
 - Revisión sistemática de literatura (decisión de novedad, `docs/estado_del_arte.md` §3).
 
+## [0.1.1] — 2026-10-29
+
+### Corregido
+- Metadatos de Zenodo (`.zenodo.json`): identificadores relacionados como DOI con su esquema
+  explícito y sin autorreferencia al repositorio (Zenodo la agrega solo); licencia con el
+  identificador `mit`. Primera versión archivada en Zenodo.
+
 ## [0.1.0] — 2026-10-28
 
 Primera versión pública.
@@ -37,5 +44,6 @@ Primera versión pública.
   área de drenaje (ρ = 0,81) y el diseño D‑óptimo gana en 11 de 12 redes.
 - CI con uv, ruff y pytest; metadatos de cita (`CITATION.cff`, `.zenodo.json`).
 
-[Sin publicar]: https://github.com/nvasquezc/inversion-ruteo-fluvial-co/compare/v0.1.0...HEAD
+[Sin publicar]: https://github.com/nvasquezc/inversion-ruteo-fluvial-co/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/nvasquezc/inversion-ruteo-fluvial-co/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/nvasquezc/inversion-ruteo-fluvial-co/releases/tag/v0.1.0

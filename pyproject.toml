@@ -1,6 +1,6 @@
 [project]
 name = "ruteo-inverso"
-version = "0.1.0"
+version = "0.1.1"
 description = "Inversión de parámetros de ruteo fluvial con operador diferenciable conservativo, análisis de resolución y diseño de redes hidrométricas para Colombia"
 readme = "README.md"
 authors = [

@@ -9,7 +9,7 @@
       "orcid": "0009-0003-6483-790X"
     }
   ],
-  "license": "MIT",
+  "license": "mit",
   "access_right": "open",
   "language": "spa",
   "keywords": [
@@ -24,19 +24,16 @@
   ],
   "related_identifiers": [
     {
-      "identifier": "https://github.com/nvasquezc/inversion-ruteo-fluvial-co",
-      "relation": "isSupplementTo",
-      "resource_type": "software"
-    },
-    {
       "identifier": "10.1029/2023WR035337",
       "relation": "references",
-      "resource_type": "publication-article"
+      "resource_type": "publication-article",
+      "scheme": "doi"
     },
     {
-      "identifier": "https://zenodo.org/records/18794895",
+      "identifier": "10.5281/zenodo.18794895",
       "relation": "references",
-      "resource_type": "dataset"
+      "resource_type": "dataset",
+      "scheme": "doi"
     }
   ],
   "notes": "Desarrollado en el marco de la MSc en Analítica de Datos, Universidad Central (Bogotá, Colombia). Documentación y resultados bajo CC BY 4.0."
