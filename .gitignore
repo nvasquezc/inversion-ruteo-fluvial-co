@@ -16,3 +16,6 @@ data/*
 # Salidas intermedias
 .pytest_cache/
 .ipynb_checkpoints/
+
+# Salidas locales del asistente (no versionar)
+Claude outputs/
