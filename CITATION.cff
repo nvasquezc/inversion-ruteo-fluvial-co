@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Si usa este software, por favor cítelo así."
 type: software
 title: "inversion-ruteo-fluvial-co: inversión de ruteo fluvial, resolución y diseño de redes hidrométricas para Colombia"
-version: 0.1.0
-date-released: 2026-10-28
+version: 0.1.1
+date-released: 2026-10-29
 license: MIT
 repository-code: "https://github.com/nvasquezc/inversion-ruteo-fluvial-co"
 abstract: >-
@@ -16,12 +16,20 @@ authors:
     given-names: "Néstor Oswaldo"
     orcid: "https://orcid.org/0009-0003-6483-790X"
     affiliation: "Jitter Ingeniería SAS / Universidad Central"
+    email: "nvasquezc@ucentral.edu.co"
+    website: "https://jitteringenieria.com"
     country: CO
-# Después de la primera publicación en Zenodo, agregue el DOI de concepto:
-# identifiers:
-#   - type: doi
-#     value: "10.5281/zenodo.XXXXXXX"
-#     description: "DOI de concepto (todas las versiones)"
+doi: "10.5281/zenodo.23750301"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23750301"
+    description: "Zenodo, v0.1.1"
+  - type: url
+    value: "https://github.com/nvasquezc/inversion-ruteo-fluvial-co"
+    description: "Repositorio de código"
+  - type: url
+    value: "https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0002530533"
+    description: "CvLAC del autor (Minciencias)"
 keywords:
   - hidrología diferenciable
   - Muskingum-Cunge

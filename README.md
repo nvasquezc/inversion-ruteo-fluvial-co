@@ -1,7 +1,6 @@
 # inversion-ruteo-fluvial-co
 
-<!-- Tras la primera publicación en Zenodo, reemplace XXXXXXX por el DOI de concepto -->
-<!-- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXXX) -->
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23750301.svg)](https://doi.org/10.5281/zenodo.23750301)
 [![Licencia: MIT](https://img.shields.io/badge/c%C3%B3digo-MIT-blue.svg)](LICENSE)
 [![Docs: CC BY 4.0](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](LICENSE-docs.md)
 [![CI](https://github.com/nvasquezc/inversion-ruteo-fluvial-co/actions/workflows/ci.yml/badge.svg)](https://github.com/nvasquezc/inversion-ruteo-fluvial-co/actions/workflows/ci.yml)
@@ -89,7 +88,7 @@ El análisis completo, con 14 figuras numeradas y su interpretación, está en e
 Cinco hipótesis falsables (H1–H5), con su prueba y su criterio de rechazo, en
 [`docs/protocolo.md`](docs/protocolo.md).
 
-## Estado — v0.1.0 (oct. 2026)
+## Estado — v0.1.1 (oct. 2026)
 
 | Fase | Contenido | Estado |
 |---|---|---|
@@ -194,8 +193,8 @@ de ruteo usado en pronóstico y alerta. Sirve para priorizar inversión en monit
 Use el botón **"Cite this repository"** de GitHub o el archivo [`CITATION.cff`](CITATION.cff):
 
 > Vásquez Castro, N. O. (2026). *inversion-ruteo-fluvial-co: inversión de ruteo fluvial,
-> resolución y diseño de redes hidrométricas para Colombia* (v0.1.0) [Software].
-> https://github.com/nvasquezc/inversion-ruteo-fluvial-co
+> resolución y diseño de redes hidrométricas para Colombia* (v0.1.1) [Software]. Zenodo.
+> https://doi.org/10.5281/zenodo.23750301
 
 Si usa los resultados de la Fase 0, cite también CAMELS‑COL (Zenodo 18794895) y GRanD v1.3.
 
@@ -207,4 +206,11 @@ Código bajo [MIT](LICENSE). Documentación, cuaderno y resultados bajo
 ## Autor
 
 **Néstor Oswaldo Vásquez Castro** — Jitter Ingeniería SAS / Universidad Central (Bogotá, Colombia)
-[![ORCID](https://img.shields.io/badge/ORCID-0009--0003--6483--790X-a6ce39.svg)](https://orcid.org/0009-0003-6483-790X)
+
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0003--6483--790X-a6ce39?logo=orcid&logoColor=white)](https://orcid.org/0009-0003-6483-790X)
+[![CvLAC](https://img.shields.io/badge/CvLAC-Minciencias-0b5394)](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0002530533)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-novc-0a66c2)](https://www.linkedin.com/in/novc)
+[![Web](https://img.shields.io/badge/web-jitteringenieria.com-555555)](https://jitteringenieria.com)
+[![Correo](https://img.shields.io/badge/correo-nvasquezc%40ucentral.edu.co-555555)](mailto:nvasquezc@ucentral.edu.co)
+
+Desarrollado en el marco de la MSc en Analítica de Datos, Universidad Central.
