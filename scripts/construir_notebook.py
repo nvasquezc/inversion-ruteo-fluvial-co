@@ -44,7 +44,8 @@ md(r"""
 <div style="font-size:26px;font-weight:700;color:#1a1a1a;line-height:1.25">Inversión del ruteo fluvial, resolución<br>y diseño de la red de aforos en Colombia</div>
 <div style="font-size:14.5px;color:#333333;margin-top:10px">Néstor O. Vásquez C.</div>
 <div style="font-size:13px;color:#555555">Jitter Ingeniería SAS · Maestría en Analítica de Datos, Universidad Central, Bogotá</div>
-<div style="font-size:13px;color:#555555">ORCID <a href="https://orcid.org/0009-0003-6483-790X">0009-0003-6483-790X</a> · <a href="https://github.com/nvasquezc/inversion-ruteo-fluvial-co">github.com/nvasquezc/inversion-ruteo-fluvial-co</a></div>
+<div style="font-size:13px;color:#555555">ORCID <a href="https://orcid.org/0009-0003-6483-790X">0009-0003-6483-790X</a> · <a href="https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0002530533">CvLAC</a> · DOI <a href="https://doi.org/10.5281/zenodo.23750301">10.5281/zenodo.23750301</a></div>
+<div style="font-size:13px;color:#555555"><a href="https://github.com/nvasquezc/inversion-ruteo-fluvial-co">github.com/nvasquezc/inversion-ruteo-fluvial-co</a></div>
 </div>
 
 <div style="border-top:1.5px solid #1a1a1a;border-bottom:1.5px solid #1a1a1a;padding:10px 4px 12px 4px;margin:16px 0 18px 0;text-align:justify;font-size:14px;line-height:1.5">
