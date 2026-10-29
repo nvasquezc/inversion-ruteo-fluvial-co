@@ -213,4 +213,4 @@ Código bajo [MIT](LICENSE). Documentación, cuaderno y resultados bajo
 [![Web](https://img.shields.io/badge/web-jitteringenieria.com-555555)](https://jitteringenieria.com)
 [![Correo](https://img.shields.io/badge/correo-nvasquezc%40ucentral.edu.co-555555)](mailto:nvasquezc@ucentral.edu.co)
 
-Desarrollado en el marco de la MSc en Analítica de Datos, Universidad Central.
+
